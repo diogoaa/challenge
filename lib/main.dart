@@ -1,13 +1,18 @@
+import 'package:challenge/helpers/user_helper.dart';
 import 'package:challenge/pages/authentication/login_page.dart';
 import 'package:challenge/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp(
-    defaultHome: '/login',
-  ));
+  Intl.defaultLocale = 'pt_Br';
+
+  final home = await UserHelper.getHome();
+
+  runApp(MyApp(defaultHome: home));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,8 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Challenge App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
       ),
@@ -28,6 +34,14 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
       },
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('pt', 'BR'),
+      ],
     );
   }
 }
