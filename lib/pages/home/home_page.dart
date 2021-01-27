@@ -67,16 +67,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Listagem'), actions: [
-        IconButton(
-          icon: Text('Sair'),
-          onPressed: () {
-            UserHelper.removeUser();
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/login', (route) => false);
-          },
-        ),
-      ]),
+      appBar: AppBar(
+        title: Text('Clima'),
+        actions: [
+          IconButton(
+            icon: Text('Sair'),
+            onPressed: () {
+              UserHelper.removeUser();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
+            },
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () => _controller.findWeathers(isRefresh: true),
         child: SingleChildScrollView(
@@ -90,7 +93,13 @@ class _HomePageState extends State<HomePage> {
                   : Column(
                       children: [
                         Text(
-                            '${_controller.weathers.length} Registros encontrados'),
+                          '${_controller.weathers.length} Registros encontrados',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          'Puxe para atualizar',
+                          style: TextStyle(fontSize: 10),
+                        ),
                         SizedBox(
                           height: 20,
                         ),
