@@ -17,12 +17,18 @@ abstract class _HomeStoreBase with Store {
   @observable
   bool searchingWeathers = false;
 
+  @observable
+  bool useAuth = true;
+
   @action
   Future<List<Weather>> findWeathers({bool isRefresh: false}) async {
     if (!isRefresh) searchingWeathers = true;
     final user = await UserHelper.getUser();
 
-    final response = await _data.findWeathers(token: user?.token);
+    final response = await _data.findWeathers(
+      token: user?.token,
+      useAuth: useAuth,
+    );
 
     weathers.clear();
     weathers.addAll(response);

@@ -1,5 +1,4 @@
 import 'package:challenge/helpers/date_helper.dart';
-import 'package:challenge/helpers/secure_storage.dart';
 import 'package:challenge/helpers/user_helper.dart';
 import 'package:challenge/models/weather_model.dart';
 import 'package:challenge/store/home/home_store.dart';
@@ -70,8 +69,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Clima'),
         actions: [
-          IconButton(
-            icon: Text('Sair'),
+          FlatButton(
+            child: Text('Sair'),
             onPressed: () {
               UserHelper.removeUser();
               Navigator.pushNamedAndRemoveUntil(
@@ -92,6 +91,13 @@ class _HomePageState extends State<HomePage> {
                     )
                   : Column(
                       children: [
+                        // FlatButton(
+                        //   child: Text('Usar Token'),
+                        //   onPressed: () {
+                        //     _controller.useAuth = !_controller.useAuth;
+                        //     _controller.findWeathers();
+                        //   },
+                        // ),
                         Text(
                           '${_controller.weathers.length} Registros encontrados',
                           style: TextStyle(fontSize: 16),
@@ -122,6 +128,19 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      floatingActionButton: Observer(builder: (_) {
+        return FloatingActionButton(
+          child: Icon(Icons.build_circle),
+          tooltip: 'Usar token',
+          backgroundColor: _controller.useAuth
+              ? Theme.of(context).accentColor.withOpacity(0.7)
+              : Colors.grey.withOpacity(0.7),
+          onPressed: () {
+            _controller.useAuth = !_controller.useAuth;
+            _controller.findWeathers();
+          },
+        );
+      }),
     );
   }
 }

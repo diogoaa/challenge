@@ -40,6 +40,21 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
+  final _$useAuthAtom = Atom(name: '_HomeStoreBase.useAuth');
+
+  @override
+  bool get useAuth {
+    _$useAuthAtom.reportRead();
+    return super.useAuth;
+  }
+
+  @override
+  set useAuth(bool value) {
+    _$useAuthAtom.reportWrite(value, super.useAuth, () {
+      super.useAuth = value;
+    });
+  }
+
   final _$findWeathersAsyncAction = AsyncAction('_HomeStoreBase.findWeathers');
 
   @override
@@ -52,7 +67,8 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   String toString() {
     return '''
 weathers: ${weathers},
-searchingWeathers: ${searchingWeathers}
+searchingWeathers: ${searchingWeathers},
+useAuth: ${useAuth}
     ''';
   }
 }

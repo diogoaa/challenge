@@ -4,15 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class Homedata {
-  Future<List<Weather>> findWeathers({@required String token}) async {
+  Future<List<Weather>> findWeathers(
+      {@required String token, @required bool useAuth}) async {
     var weathers = List<Weather>();
 
     try {
-      Response<List> response = await Dio().get(
-        RoutesApi.WEATHER,
+      Response response = await Dio().get(
+        useAuth ? RoutesApi.WEATHER_AUTH : RoutesApi.WEATHER,
         options: Options(
           contentType: 'application/json',
-          headers: {'token': token},
+          headers: {'Authorization': token},
           followRedirects: false,
           validateStatus: (status) {
             return status < 500;
@@ -25,6 +26,8 @@ class Homedata {
           weathers.add(Weather.fromJson(json));
         });
       } else {
+        print(response.statusCode);
+        print(response.statusMessage);
         print(response.data);
       }
     } catch (e) {
