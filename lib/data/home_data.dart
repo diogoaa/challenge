@@ -13,7 +13,7 @@ class Homedata {
         useAuth ? RoutesApi.WEATHER_AUTH : RoutesApi.WEATHER,
         options: Options(
           contentType: 'application/json',
-          headers: {'Authorization': token},
+          headers: {'Authorization': 'Bearer' + token},
           followRedirects: false,
           validateStatus: (status) {
             return status < 500;
